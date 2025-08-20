@@ -1,0 +1,330 @@
+
+`timescale 1ns/10ps
+
+`ifdef HL_MODEL
+    `define WREAL wire
+`else
+    `define WREAL electrical
+`endif
+
+// TODO: - store received data
+
+module i2c_driver(VDD, VSS, SCL, SDA, PULLUP_EN);
+
+    //----------------------------------------------------------------
+    // Parameters
+    parameter integer R_PULLUP = 5_500;  // Ohm
+    parameter real    I_MAX    = 1.3E-3; // Amps
+
+    // 0: <=100kbps (Standard Mode)
+    // 1: <=400kbps (Fast Mode)
+    // 2: <=1Mbps (Fast Mode +)
+    // 3: <=3.4Mbps (High-Speed Mode)
+    // 4: <=5Mbps (Ultra Fast Mode)
+    integer MODE = 0;
+
+    // bit period in ns
+    integer PERIOD = 10_000;
+
+    //----------------------------------------------------------------
+    // Buffer
+    reg [7:0] rx_buffer [31:0];
+    reg [7:0] tx_buffer [31:0];
+
+    //----------------------------------------------------------------
+    // Interface
+
+    output SCL;
+    inout  SDA;
+    inout  VDD;
+    inout  VSS;
+    input  PULLUP_EN;
+
+    `WREAL SCL;
+    `WREAL SDA;
+    `WREAL VDD;
+    `WREAL VSS;
+    wire   PULLUP_EN;
+
+    //----------------------------------------------------------------
+    // Driver Modelling
+    reg  scl_out;
+    reg  sda_out;
+    wire sda_in;
+    wire scl_in;
+
+    initial
+    begin
+        scl_out = 1'b1;
+        sda_out = 1'b1;
+    end
+
+`ifdef HL_MODEL
+
+    assign (pull1, strong0) SDA = (!sda_out) ? 1'b0 : (PULLUP_EN) ? 1'b1 : 1'bz;
+    assign (pull1, strong0) SCL = (!scl_out) ? 1'b0 : (PULLUP_EN) ? 1'b1 : 1'bz;
+    assign sda_in = (SDA === 1'b1);
+    assign scl_in = (SCL === 1'b1);
+
+`else
+
+    analog
+    begin
+
+        @cross(V(SDA, VSS) - V(VDD, VSS) * 0.5, 0);
+            sda_in = V(SDA,VSS) > 0.5 * V(VDD, VSS);
+        
+        @cross(V(SCL, VSS) - V(VDD, VSS) * 0.5, 0);
+            scl_in = V(SCL,VSS) > 0.5 * V(VDD, VSS);
+
+        I(VDD, SCL) <+ V(VDD, SCL) / R_PULLUP * PULLUP_EN;
+        I(SCL, VSS) <+ I_MAX * transition(scl_out, 1n, 1n);
+
+        I(VDD, SDA) <+ V(VDD, SDA) / R_PULLUP * PULLUP_EN;
+        I(SDA, VSS) <+ I_MAX * transition(sda_out, 1n, 1n);
+
+    end
+
+`endif
+
+
+    //----------------------------------------------------------------
+    // Configuration
+
+    task SetStandardMode();
+        begin
+            MODE = 0;
+        end
+    endtask
+
+    task SetFastMode();
+        begin
+            MODE = 1;
+        end
+    endtask
+
+    task SetFastModePlus();
+        begin
+            MODE = 2;
+        end
+    endtask
+
+    task SetHighSpeedMode();
+        begin
+            MODE = 3;
+            $warning("This mode is not implemented");
+        end
+    endtask
+
+    task SetUltraFastMode();
+        begin
+            MODE = 4;
+            $warning("This mode is not implemented");
+        end
+    endtask
+
+    //----------------------------------------------------------------
+    // Function
+
+    // shift register
+    reg [7:0] rx_data;
+    // onehot finite state machine
+    reg       state_idle;
+    reg       state_start;
+    reg       state_stop;
+    reg [7:0] state_data;
+    reg       state_ack;
+    reg       state_free;
+    // buffer counter
+    integer   rx_counter;
+
+    initial
+    begin
+        state_idle  <= 1'b1;
+        state_start <= 1'b0;
+        state_stop  <= 1'b0;
+        state_data  <= 1'b0;
+        state_ack   <= 1'b0;
+    end
+
+    always @(negedge sda_in)
+    begin
+        if (scl_in && !state_idle)
+        begin
+            $warning("Detected a start condition while not idle!");
+        end 
+        if (scl_in)
+        begin
+            state_idle  <= 1'b0;
+            state_start <= 1'b1;
+            state_stop  <= 1'b0;
+            state_data  <= 8'd0;
+            state_ack   <= 1'b0;
+            rx_counter  <=  'd0;
+            for(integer i = 0; i < 'd32; i=i+1)
+            begin
+                rx_buffer[i] <= 8'h00;
+            end
+        end
+    end
+
+    always @(posedge sda_in)
+    begin
+        if (scl_in)
+        begin
+            state_idle  <= 1'b0;
+            state_start <= 1'b0;
+            state_stop  <= 1'b1;
+            state_data  <= 8'd0;
+            state_ack   <= 1'b0;
+        end
+    end
+
+    always @(negedge scl_in)
+    begin
+        if (!state_start)
+            #(T_SDA_SCL_RISE);
+        if (!state_idle)
+        begin
+            state_idle  <= 1'b0;
+            state_start <= 1'b0;
+            state_stop  <= 1'b0;
+            state_data  <= {state_data[6:0], state_start | state_ack};
+            state_ack   <= state_data[7];
+        end
+    end
+
+    always @(negedge scl_in)
+    begin
+        if (|state_data)
+            rx_data[7:0] <= {rx_data[6:0], sda_in};
+        if (state_ack &&  sda_in)
+            $warning("Detected a NACK!");
+        if (state_ack && !sda_in)
+        begin
+            rx_buffer[rx_counter] <= rx_data;
+            rx_counter <= rx_counter + 1;
+        end
+
+    end
+
+    always @(posedge state_stop)
+    begin
+        #(T_FREE_BUS) state_idle <= state_stop;
+    end
+
+
+
+    integer T_LOW_MIN;      // ns
+    integer T_HIGH_MIN;     // ns
+    integer T_FREE_BUS;     // ns
+    integer T_SDA_SCL_RISE; // ns
+
+    assign T_LOW_MIN  = (MODE == 0) ? 4_700 :
+                        (MODE == 1) ? 1_300 : 500;
+    
+    assign T_HIGH_MIN = (MODE == 0) ? 4_000 :
+                        (MODE == 1) ?   600 : 260;
+
+    assign T_FREE_BUS = (MODE == 0) ? 4_700 :
+                        (MODE == 1) ? 1_300 :
+                        (MODE == 2) ?   500 : 0;
+
+    initial
+    begin
+        T_SDA_SCL_RISE = 2_350;
+    end
+
+    task Start();
+        begin
+            sda_out = 1;
+            scl_out = 1;
+            #(T_HIGH_MIN);
+            sda_out = 0;
+            #(T_LOW_MIN);
+            scl_out = 0;
+        end
+    endtask
+
+    task Stop();
+        begin
+            sda_out = 0;
+            #(T_LOW_MIN);
+            scl_out = 1;
+            #(T_HIGH_MIN);
+            sda_out = 1;
+            #(T_HIGH_MIN);
+        end
+    endtask
+
+    task SendBit(
+        input integer b
+    );
+        begin
+            scl_out = 0;
+            sda_out = b;
+            #(T_SDA_SCL_RISE);
+            scl_out = 1;
+            #(T_HIGH_MIN);
+            scl_out = 0;
+            #(PERIOD - T_HIGH_MIN - T_SDA_SCL_RISE);
+        end
+    endtask
+
+    task SendByte(
+        input [7:0] b
+    );
+        begin
+            SendBit(b[7]); // DATA
+            SendBit(b[6]); // DATA
+            SendBit(b[5]); // DATA
+            SendBit(b[4]); // DATA
+            SendBit(b[3]); // DATA
+            SendBit(b[2]); // DATA
+            SendBit(b[1]); // DATA
+            SendBit(b[0]); // DATA
+            SendBit(1'b1); // ACK
+        end
+    endtask
+
+    task SendFrame(
+        input integer length,
+        input [6:0] address
+    );
+        integer i;
+        integer acknowledged;
+        begin
+            i = 0;
+            Start();
+            SendByte(address << 1);
+            while((i < length) && acknowledged)
+            begin
+                SendByte(tx_buffer[i]);
+                i = i + 1;
+            end
+            Stop();
+        end
+    endtask
+
+    task ReceiveFrame(
+        input integer length,
+        input [6:0] address
+    );
+        integer i;
+        integer acknowledged;
+        begin
+            i = 0;
+            Start();
+            SendByte((address << 1) | 1);
+            while((i < length) && acknowledged)
+            begin
+                SendByte(8'hZZ);
+                if (acknowledged)
+                    rx_buffer[i] = rx_data;
+                i = i + 1;
+            end
+            Stop();
+        end
+    endtask
+
+endmodule

@@ -1,0 +1,121 @@
+`timescale 1ns/10ps
+
+`ifdef HL_MODEL
+    `define WREAL wire
+`else
+    `define WREAL electrical
+`endif
+
+// TODO: - store received data
+
+module uart_driver(VDD, VSS, URX, UTX, PULLUP_EN);
+
+    //----------------------------------------------------------------
+    // Parameters
+    parameter integer R_PULLUP = 5_500;  // Ohm
+    parameter real    I_MAX    = 1.3E-3; // Amps
+
+    integer HAS_PARITY  = 0;
+    integer ODD_PARITY  = 0;
+    integer EXTEND_STOP = 0;
+    integer WORD_MODE   = 0;
+    integer LSB_FIRST   = 0;
+
+    // bit period in ns
+    integer PERIOD = 10_000;
+
+    //----------------------------------------------------------------
+    // Buffer
+    reg [7:0] rx_buffer [31:0];
+    reg [7:0] tx_buffer [31:0];
+
+    //----------------------------------------------------------------
+    // Interface
+    input  URX;
+    output UTX;
+    inout  VDD;
+    inout  VSS;
+    input  PULLUP_EN;
+
+    `WREAL URX;
+    `WREAL UTX;
+    `WREAL VDD;
+    `WREAL VSS;
+    wire   PULLUP_EN;
+
+`ifdef HL_MODEL
+
+    reg  utx_out;
+    wire urx_in;
+
+    assign (pull1, strong0) #10 UTX = (!utx_out) ? 1'b0 : (PULLUP_EN) ? 1'b1 : 1'bz;
+    assign urx_in = (URX === 1'b1);
+
+`else
+
+`endif
+
+    initial
+    begin
+        utx_out = 1'b1;
+    end
+
+    task SendByte(
+        input [7:0] data
+    );
+        // start bit
+        utx_out = 1'b0;
+        #(PERIOD);
+        // data byte
+        for(integer i=0; i < 'd8; i=i+1)
+        begin
+            utx_out = data[(LSB_FIRST > 0) ? i : 7 - i];
+            #(PERIOD);
+        end
+        // parity bit
+        if (HAS_PARITY > 0)
+        begin
+            utx_out = (ODD_PARITY > 0) ? ~^data[7:0] : ^data[7:0];
+            #(PERIOD);
+        end
+        // stop bits
+        utx_out = 1'b1;
+        #(PERIOD);
+        for(integer i=0; i < EXTEND_STOP; i=i+1)
+        begin
+            utx_out = 1'b1;
+            #(PERIOD);
+        end
+    endtask
+
+    task SendFrame(
+        input integer length
+    );
+        integer i;
+        begin
+            i = 0;
+            while(i < length)
+            begin
+                SendByte(tx_buffer[i]);
+                i = i + 1;
+            end
+        end
+    endtask
+
+    task ReceiveFrame(
+        input integer length
+    );
+        integer i;
+        begin
+            i = 0;
+            while(i < length)
+            begin
+                SendByte(8'hZZ);
+                i = i + 1;
+            end
+        end
+    endtask
+
+
+
+endmodule
