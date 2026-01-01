@@ -1,0 +1,28 @@
+[*]
+[*] GTKWave Analyzer v3.3.124 (w)1999-2025 BSI
+[*] Sun Jul  6 20:27:40 2025
+[*]
+[dumpfile] "/home/ludwigcron/Documents/drivers/spi/testcases/waves.fst"
+[dumpfile_mtime] "Sun Jul  6 20:26:49 2025"
+[dumpfile_size] 1709
+[savefile] "/home/ludwigcron/Documents/drivers/spi/testcases/view.gtkw"
+[timestart] 0
+[size] 1920 1042
+[pos] -31 -27
+*-20.780970 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] testcase.
+[sst_width] 269
+[signals_width] 142
+[sst_expanded] 1
+[sst_vpaned_height] 316
+@28
+testcase.sclk
+testcase.csb
+testcase.mosi
+testcase.miso
+@22
+testcase.monitor.proc_shft[7:0]
+testcase.monitor.rx_shft[7:0]
+testcase.monitor.tx_shft[7:0]
+[pattern_trace] 1
+[pattern_trace] 0
