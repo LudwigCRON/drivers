@@ -48,7 +48,7 @@ module uart_driver(VDD, VSS, URX, UTX, PULLUP_EN);
     reg  utx_out;
     wire urx_in;
 
-    assign (pull1, strong0) #10 UTX = (!utx_out) ? 1'b0 : (PULLUP_EN) ? 1'b1 : 1'bz;
+    assign (strong1, strong0) #10 UTX = (!utx_out) ? 1'b0 : (PULLUP_EN) ? 1'b1 : 1'bz;
     assign urx_in = (URX === 1'b1);
 
 `else

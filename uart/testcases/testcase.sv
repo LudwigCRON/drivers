@@ -43,6 +43,7 @@ module testcase;
         .rstb            (rstb),
         .atpg_rst_ctrl   (1'b0),
         .cfg_clk_div     (9'd4),
+        .cfg_enable      (1'b1),
         .cfg_has_parity  (cfg.has_parity),
         .cfg_odd_parity  (cfg.odd_parity),
         .cfg_extend_stop (cfg.extend_stop),
