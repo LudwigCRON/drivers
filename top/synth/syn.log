@@ -1,0 +1,1385 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2025  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.60+8 (git sha1 0e31e389f2cf5b29e900e56285b3d1f058f38c29, g++ 15.2.1 -O2 -flto=auto -ffat-lto-objects -fexceptions -fstack-protector-strong -m64 -march=x86-64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -mtls-dialect=gnu2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -fPIC -O3)
+Disabled loggint errors to stderr.
+
+1. Executing Verilog-2005 frontend: /home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v
+Parsing Verilog input from `/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v' to AST representation.
+verilog frontend filename /home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v
+Storing AST representation for module `$abstract\CLOCK_MIXER'.
+Storing AST representation for module `$abstract\clock_divider'.
+Successfully finished Verilog frontend.
+
+2. Executing Verilog-2005 frontend: /home/lcr/Documents/drivers/tap/rtl/tap.v
+Parsing Verilog input from `/home/lcr/Documents/drivers/tap/rtl/tap.v' to AST representation.
+verilog frontend filename /home/lcr/Documents/drivers/tap/rtl/tap.v
+Storing AST representation for module `$abstract\tap'.
+Successfully finished Verilog frontend.
+
+3. Executing Verilog-2005 frontend: /home/lcr/Documents/drivers/tap/rtl/opcg.v
+Parsing Verilog input from `/home/lcr/Documents/drivers/tap/rtl/opcg.v' to AST representation.
+verilog frontend filename /home/lcr/Documents/drivers/tap/rtl/opcg.v
+Storing AST representation for module `$abstract\opcg'.
+Successfully finished Verilog frontend.
+
+4. Executing Verilog-2005 frontend: /home/lcr/Documents/drivers/top/rtl/ana_ctrl.v
+Parsing Verilog input from `/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v' to AST representation.
+verilog frontend filename /home/lcr/Documents/drivers/top/rtl/ana_ctrl.v
+Storing AST representation for module `$abstract\ana_ctrl'.
+Successfully finished Verilog frontend.
+
+5. Executing Verilog-2005 frontend: /home/lcr/Documents/drivers/top/rtl/dsp.v
+Parsing Verilog input from `/home/lcr/Documents/drivers/top/rtl/dsp.v' to AST representation.
+verilog frontend filename /home/lcr/Documents/drivers/top/rtl/dsp.v
+Storing AST representation for module `$abstract\dsp'.
+Successfully finished Verilog frontend.
+
+6. Executing Verilog-2005 frontend: /home/lcr/Documents/drivers/top/rtl/top.v
+Parsing Verilog input from `/home/lcr/Documents/drivers/top/rtl/top.v' to AST representation.
+verilog frontend filename /home/lcr/Documents/drivers/top/rtl/top.v
+Storing AST representation for module `$abstract\top'.
+Successfully finished Verilog frontend.
+
+7. Executing HIERARCHY pass (managing design hierarchy).
+
+8. Executing AST frontend in derive mode using pre-parsed AST for module `\top'.
+Generating RTLIL representation for module `\top'.
+
+8.1. Analyzing design hierarchy..
+Top module:  \top
+
+8.2. Executing AST frontend in derive mode using pre-parsed AST for module `\dsp'.
+Generating RTLIL representation for module `\dsp'.
+
+8.3. Executing AST frontend in derive mode using pre-parsed AST for module `\ana_ctrl'.
+Generating RTLIL representation for module `\ana_ctrl'.
+
+8.4. Executing AST frontend in derive mode using pre-parsed AST for module `\opcg'.
+Generating RTLIL representation for module `\opcg'.
+
+8.5. Executing AST frontend in derive mode using pre-parsed AST for module `\tap'.
+Generating RTLIL representation for module `\tap'.
+Parameter \MIN_RATIO = 1
+Parameter \MAX_RATIO = 64
+
+8.6. Executing AST frontend in derive mode using pre-parsed AST for module `\clock_divider'.
+Parameter \MIN_RATIO = 1
+Parameter \MAX_RATIO = 64
+Generating RTLIL representation for module `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider'.
+Parameter \MIN_RATIO = 1
+Parameter \MAX_RATIO = 64
+Found cached RTLIL representation for module `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider'.
+
+8.7. Analyzing design hierarchy..
+Top module:  \top
+Used module:     \dsp
+Used module:     \ana_ctrl
+Used module:     \opcg
+Used module:     \tap
+Used module:     $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider
+
+8.8. Executing AST frontend in derive mode using pre-parsed AST for module `\CLOCK_MIXER'.
+Generating RTLIL representation for module `\CLOCK_MIXER'.
+
+8.9. Analyzing design hierarchy..
+Top module:  \top
+Used module:     \dsp
+Used module:     \ana_ctrl
+Used module:     \opcg
+Used module:     \tap
+Used module:     $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider
+Used module:         \CLOCK_MIXER
+
+8.10. Analyzing design hierarchy..
+Top module:  \top
+Used module:     \dsp
+Used module:     \ana_ctrl
+Used module:     \opcg
+Used module:     \tap
+Used module:     $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider
+Used module:         \CLOCK_MIXER
+Removing unused module `$abstract\top'.
+Removing unused module `$abstract\dsp'.
+Removing unused module `$abstract\ana_ctrl'.
+Removing unused module `$abstract\opcg'.
+Removing unused module `$abstract\tap'.
+Removing unused module `$abstract\clock_divider'.
+Removing unused module `$abstract\CLOCK_MIXER'.
+Removed 7 unused modules.
+
+9. Executing PROC pass (convert processes to netlists).
+
+9.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+9.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 1 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:92$185 in module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.
+Marked 1 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:74$182 in module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.
+Marked 1 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:66$179 in module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.
+Marked 2 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:56$175 in module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.
+Marked 2 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:44$166 in module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.
+Marked 1 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:113$150 in module tap.
+Marked 1 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:96$146 in module tap.
+Marked 3 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:80$137 in module tap.
+Marked 1 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:65$122 in module tap.
+Marked 1 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:57$120 in module tap.
+Marked 2 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:40$111 in module tap.
+Marked 1 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:86$105 in module opcg.
+Marked 1 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:78$98 in module opcg.
+Marked 1 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:65$95 in module opcg.
+Removed 1 dead cases from process $proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:46$87 in module opcg.
+Marked 2 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:46$87 in module opcg.
+Marked 1 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:38$85 in module opcg.
+Marked 1 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:28$83 in module opcg.
+Marked 1 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:112$77 in module ana_ctrl.
+Marked 2 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:98$73 in module ana_ctrl.
+Marked 1 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:84$64 in module ana_ctrl.
+Marked 1 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:70$54 in module ana_ctrl.
+Marked 2 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:54$48 in module ana_ctrl.
+Marked 2 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:35$40 in module ana_ctrl.
+Marked 1 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:112$21 in module dsp.
+Marked 2 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:83$9 in module dsp.
+Marked 1 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:75$6 in module dsp.
+Marked 1 switch rules as full_case in process $proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:41$2 in module dsp.
+Removed a total of 1 dead cases.
+
+9.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 20 redundant assignments.
+Promoted 10 assignments to connections.
+
+9.4. Executing PROC_INIT pass (extract init attributes).
+
+9.5. Executing PROC_ARST pass (detect async resets in processes).
+Found async reset \rstb in `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:92$185'.
+Found async reset \rstb in `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:66$179'.
+Found async reset \rstb in `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:56$175'.
+Found async reset \rstb in `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:44$166'.
+Found async reset \prim_rstb in `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:113$150'.
+Found async reset \trstb in `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:96$146'.
+Found async reset \trstb in `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:80$137'.
+Found async reset \trstb in `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:57$120'.
+Found async reset \trstb in `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:40$111'.
+Found async reset \trstb in `\opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:65$95'.
+Found async reset \gclk_rstb in `\opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:46$87'.
+Found async reset \gclk_rstb in `\opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:38$85'.
+Found async reset \gclk_rstb in `\opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:28$83'.
+Found async reset \prim_rstb in `\ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:98$73'.
+Found async reset \prim_rstb in `\ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:84$64'.
+Found async reset \prim_rstb in `\ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:70$54'.
+Found async reset \prim_rstb in `\ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:54$48'.
+Found async reset \prim_rstb in `\ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:35$40'.
+Found async reset \prim_rstb in `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:83$9'.
+Found async reset \prim_rstb in `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:75$6'.
+
+9.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~26 debug messages>
+
+9.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:92$185'.
+     1/1: $0\sync_rstb[3:0]
+Creating decoders for process `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:74$182'.
+     1/1: $1\bypass_latched[0:0]
+Creating decoders for process `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:66$179'.
+     1/1: $0\clk_f[0:0]
+Creating decoders for process `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:56$175'.
+     1/1: $0\clk_r[0:0]
+Creating decoders for process `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:44$166'.
+     1/1: $0\counter[5:0]
+Creating decoders for process `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:113$150'.
+     1/2: $0\window_elapsed[0:0]
+     2/2: $0\window_counter[4:0]
+Creating decoders for process `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:96$146'.
+     1/2: $0\tscan_exe[0:0]
+     2/2: $0\tscan_enable[0:0]
+Creating decoders for process `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:80$137'.
+     1/1: $0\counter[4:0]
+Creating decoders for process `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:65$122'.
+     1/1: $1\next_state[2:0]
+Creating decoders for process `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:57$120'.
+     1/1: $0\state[2:0]
+Creating decoders for process `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:40$111'.
+     1/1: $0\cmd[7:0]
+Creating decoders for process `\opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:86$105'.
+     1/1: $1\tck_enable[0:0]
+Creating decoders for process `\opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:78$98'.
+     1/1: $1\pulse_enable[0:0]
+Creating decoders for process `\opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:65$95'.
+     1/1: $0\exe_done_resync[1:0]
+Creating decoders for process `\opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:46$87'.
+     1/1: $0\state[2:0]
+Creating decoders for process `\opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:38$85'.
+     1/1: $0\scan_exe_resync[2:0]
+Creating decoders for process `\opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:28$83'.
+     1/1: $0\in_app_resync[1:0]
+Creating decoders for process `\ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:112$77'.
+     1/1: $1\afe_sel[3:0]
+Creating decoders for process `\ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:98$73'.
+     1/1: $0\counter[3:0]
+Creating decoders for process `\ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:84$64'.
+     1/1: $0\sync_eoc[1:0]
+Creating decoders for process `\ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:70$54'.
+     1/1: $0\phase_update[0:0]
+Creating decoders for process `\ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:54$48'.
+     1/1: $0\meas_phase[3:0]
+Creating decoders for process `\ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:35$40'.
+     1/1: $0\meas_state[2:0]
+Creating decoders for process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:227$38'.
+     1/1: $0\reg_z[11:0]
+Creating decoders for process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:221$36'.
+     1/1: $0\reg_y[11:0]
+Creating decoders for process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:215$34'.
+     1/1: $0\reg_x[11:0]
+Creating decoders for process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:209$32'.
+     1/1: $0\reg_temp[9:0]
+Creating decoders for process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:203$30'.
+     1/1: $0\reg_sensitivity[9:0]
+Creating decoders for process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:197$28'.
+     1/1: $0\reg_offset[9:0]
+Creating decoders for process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:191$26'.
+     1/1: $0\reg_accu[11:0]
+Creating decoders for process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:112$21'.
+     1/4: $1\reg_select[7:0]
+     2/4: $1\alu_b[11:0]
+     3/4: $1\alu_a[14:0]
+     4/4: $1\alu_op[2:0]
+Creating decoders for process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:83$9'.
+     1/1: $0\dsp_state[3:0]
+Creating decoders for process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:75$6'.
+     1/1: $0\meas_state_delayed[2:0]
+Creating decoders for process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:41$2'.
+     1/1: $1\alu_q[19:0]
+
+9.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+Latch inferred for signal `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.\bypass_latched' from process `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:74$182': $auto$proc_dlatch.cc:432:proc_dlatch$343
+No latch inferred for signal `\tap.\next_state' from process `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:65$122'.
+Latch inferred for signal `\opcg.\tck_enable' from process `\opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:86$105': $auto$proc_dlatch.cc:432:proc_dlatch$354
+Latch inferred for signal `\opcg.\pulse_enable' from process `\opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:78$98': $auto$proc_dlatch.cc:432:proc_dlatch$365
+No latch inferred for signal `\ana_ctrl.\afe_sel' from process `\ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:112$77'.
+No latch inferred for signal `\dsp.\alu_a' from process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:112$21'.
+No latch inferred for signal `\dsp.\alu_b' from process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:112$21'.
+No latch inferred for signal `\dsp.\alu_op' from process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:112$21'.
+No latch inferred for signal `\dsp.\reg_select' from process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:112$21'.
+No latch inferred for signal `\dsp.\alu_q' from process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:41$2'.
+
+9.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.\sync_rstb' using process `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:92$185'.
+  created $adff cell `$procdff$370' with positive edge clock and positive level reset.
+Creating register for signal `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.\clk_f' using process `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:66$179'.
+  created $adff cell `$procdff$375' with negative edge clock and positive level reset.
+Creating register for signal `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.\clk_r' using process `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:56$175'.
+  created $adff cell `$procdff$380' with positive edge clock and positive level reset.
+Creating register for signal `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.\counter' using process `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:44$166'.
+  created $adff cell `$procdff$385' with positive edge clock and positive level reset.
+Creating register for signal `\tap.\window_counter' using process `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:113$150'.
+  created $adff cell `$procdff$390' with positive edge clock and positive level reset.
+Creating register for signal `\tap.\window_elapsed' using process `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:113$150'.
+  created $adff cell `$procdff$395' with positive edge clock and positive level reset.
+Creating register for signal `\tap.\tscan_exe' using process `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:96$146'.
+  created $adff cell `$procdff$400' with negative edge clock and positive level reset.
+Creating register for signal `\tap.\tscan_enable' using process `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:96$146'.
+  created $adff cell `$procdff$405' with negative edge clock and positive level reset.
+Creating register for signal `\tap.\counter' using process `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:80$137'.
+  created $adff cell `$procdff$410' with negative edge clock and positive level reset.
+Creating register for signal `\tap.\state' using process `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:57$120'.
+  created $adff cell `$procdff$415' with negative edge clock and positive level reset.
+Creating register for signal `\tap.\cmd' using process `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:40$111'.
+  created $adff cell `$procdff$420' with negative edge clock and positive level reset.
+Creating register for signal `\opcg.\exe_done_resync' using process `\opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:65$95'.
+  created $adff cell `$procdff$425' with positive edge clock and positive level reset.
+Creating register for signal `\opcg.\state' using process `\opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:46$87'.
+  created $adff cell `$procdff$430' with positive edge clock and positive level reset.
+Creating register for signal `\opcg.\scan_exe_resync' using process `\opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:38$85'.
+  created $adff cell `$procdff$435' with positive edge clock and positive level reset.
+Creating register for signal `\opcg.\in_app_resync' using process `\opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:28$83'.
+  created $adff cell `$procdff$440' with positive edge clock and positive level reset.
+Creating register for signal `\ana_ctrl.\counter' using process `\ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:98$73'.
+  created $adff cell `$procdff$445' with positive edge clock and positive level reset.
+Creating register for signal `\ana_ctrl.\sync_eoc' using process `\ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:84$64'.
+  created $adff cell `$procdff$450' with positive edge clock and positive level reset.
+Creating register for signal `\ana_ctrl.\phase_update' using process `\ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:70$54'.
+  created $adff cell `$procdff$455' with positive edge clock and positive level reset.
+Creating register for signal `\ana_ctrl.\meas_phase' using process `\ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:54$48'.
+  created $adff cell `$procdff$460' with positive edge clock and positive level reset.
+Creating register for signal `\ana_ctrl.\meas_state' using process `\ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:35$40'.
+  created $adff cell `$procdff$465' with positive edge clock and positive level reset.
+Creating register for signal `\dsp.\reg_z' using process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:227$38'.
+  created $dff cell `$procdff$466' with positive edge clock.
+Creating register for signal `\dsp.\reg_y' using process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:221$36'.
+  created $dff cell `$procdff$467' with positive edge clock.
+Creating register for signal `\dsp.\reg_x' using process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:215$34'.
+  created $dff cell `$procdff$468' with positive edge clock.
+Creating register for signal `\dsp.\reg_temp' using process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:209$32'.
+  created $dff cell `$procdff$469' with positive edge clock.
+Creating register for signal `\dsp.\reg_sensitivity' using process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:203$30'.
+  created $dff cell `$procdff$470' with positive edge clock.
+Creating register for signal `\dsp.\reg_offset' using process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:197$28'.
+  created $dff cell `$procdff$471' with positive edge clock.
+Creating register for signal `\dsp.\reg_accu' using process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:191$26'.
+  created $dff cell `$procdff$472' with positive edge clock.
+Creating register for signal `\dsp.\dsp_state' using process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:83$9'.
+  created $adff cell `$procdff$477' with positive edge clock and positive level reset.
+Creating register for signal `\dsp.\meas_state_delayed' using process `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:75$6'.
+  created $adff cell `$procdff$482' with positive edge clock and positive level reset.
+
+9.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+9.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Removing empty process `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:92$185'.
+Found and cleaned up 1 empty switch in `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:74$182'.
+Removing empty process `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:74$182'.
+Removing empty process `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:66$179'.
+Found and cleaned up 1 empty switch in `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:56$175'.
+Removing empty process `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:56$175'.
+Found and cleaned up 1 empty switch in `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:44$166'.
+Removing empty process `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.$proc$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:44$166'.
+Removing empty process `tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:113$150'.
+Removing empty process `tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:96$146'.
+Found and cleaned up 2 empty switches in `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:80$137'.
+Removing empty process `tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:80$137'.
+Found and cleaned up 1 empty switch in `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:65$122'.
+Removing empty process `tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:65$122'.
+Removing empty process `tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:57$120'.
+Found and cleaned up 1 empty switch in `\tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:40$111'.
+Removing empty process `tap.$proc$/home/lcr/Documents/drivers/tap/rtl/tap.v:40$111'.
+Found and cleaned up 1 empty switch in `\opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:86$105'.
+Removing empty process `opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:86$105'.
+Found and cleaned up 1 empty switch in `\opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:78$98'.
+Removing empty process `opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:78$98'.
+Removing empty process `opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:65$95'.
+Found and cleaned up 1 empty switch in `\opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:46$87'.
+Removing empty process `opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:46$87'.
+Removing empty process `opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:38$85'.
+Removing empty process `opcg.$proc$/home/lcr/Documents/drivers/tap/rtl/opcg.v:28$83'.
+Found and cleaned up 1 empty switch in `\ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:112$77'.
+Removing empty process `ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:112$77'.
+Found and cleaned up 1 empty switch in `\ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:98$73'.
+Removing empty process `ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:98$73'.
+Removing empty process `ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:84$64'.
+Removing empty process `ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:70$54'.
+Found and cleaned up 1 empty switch in `\ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:54$48'.
+Removing empty process `ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:54$48'.
+Found and cleaned up 1 empty switch in `\ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:35$40'.
+Removing empty process `ana_ctrl.$proc$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:35$40'.
+Found and cleaned up 1 empty switch in `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:227$38'.
+Removing empty process `dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:227$38'.
+Found and cleaned up 1 empty switch in `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:221$36'.
+Removing empty process `dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:221$36'.
+Found and cleaned up 1 empty switch in `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:215$34'.
+Removing empty process `dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:215$34'.
+Found and cleaned up 1 empty switch in `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:209$32'.
+Removing empty process `dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:209$32'.
+Found and cleaned up 1 empty switch in `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:203$30'.
+Removing empty process `dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:203$30'.
+Found and cleaned up 1 empty switch in `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:197$28'.
+Removing empty process `dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:197$28'.
+Found and cleaned up 1 empty switch in `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:191$26'.
+Removing empty process `dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:191$26'.
+Found and cleaned up 1 empty switch in `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:112$21'.
+Removing empty process `dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:112$21'.
+Found and cleaned up 2 empty switches in `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:83$9'.
+Removing empty process `dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:83$9'.
+Found and cleaned up 1 empty switch in `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:75$6'.
+Removing empty process `dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:75$6'.
+Found and cleaned up 1 empty switch in `\dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:41$2'.
+Removing empty process `dsp.$proc$/home/lcr/Documents/drivers/top/rtl/dsp.v:41$2'.
+Cleaned up 26 empty switches.
+
+9.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module CLOCK_MIXER.
+Optimizing module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.
+<suppressed ~17 debug messages>
+Optimizing module tap.
+<suppressed ~16 debug messages>
+Optimizing module opcg.
+<suppressed ~24 debug messages>
+Optimizing module ana_ctrl.
+<suppressed ~14 debug messages>
+Optimizing module dsp.
+<suppressed ~6 debug messages>
+Optimizing module top.
+
+10. Executing OPT pass (performing simple optimizations).
+
+10.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module CLOCK_MIXER.
+Optimizing module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.
+Optimizing module tap.
+Optimizing module opcg.
+Optimizing module ana_ctrl.
+Optimizing module dsp.
+Optimizing module top.
+
+10.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\CLOCK_MIXER'.
+Finding identical cells in module `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider'.
+<suppressed ~18 debug messages>
+Finding identical cells in module `\tap'.
+<suppressed ~36 debug messages>
+Finding identical cells in module `\opcg'.
+<suppressed ~27 debug messages>
+Finding identical cells in module `\ana_ctrl'.
+<suppressed ~60 debug messages>
+Finding identical cells in module `\dsp'.
+<suppressed ~117 debug messages>
+Finding identical cells in module `\top'.
+Removed a total of 86 cells.
+
+10.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \CLOCK_MIXER..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \tap..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \opcg..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \ana_ctrl..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \dsp..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \top..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+<suppressed ~84 debug messages>
+
+10.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \CLOCK_MIXER.
+  Optimizing cells in module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.
+  Optimizing cells in module \tap.
+  Optimizing cells in module \opcg.
+  Optimizing cells in module \ana_ctrl.
+  Optimizing cells in module \dsp.
+    New ctrl vector for $pmux cell $procmux$290: { $auto$opt_reduce.cc:137:opt_pmux$486 $auto$opt_reduce.cc:137:opt_pmux$484 }
+    New ctrl vector for $pmux cell $procmux$278: { $auto$opt_reduce.cc:137:opt_pmux$488 $procmux$320_CMP $procmux$319_CMP $procmux$308_CMP $procmux$318_CMP $procmux$317_CMP $procmux$305_CMP $procmux$316_CMP $procmux$303_CMP }
+    New ctrl vector for $pmux cell $procmux$302: { $procmux$322_CMP $auto$opt_reduce.cc:137:opt_pmux$492 $auto$opt_reduce.cc:137:opt_pmux$490 }
+    New ctrl vector for $pmux cell $procmux$266: { $procmux$308_CMP $procmux$305_CMP $auto$opt_reduce.cc:137:opt_pmux$494 $procmux$303_CMP }
+  Optimizing cells in module \dsp.
+  Optimizing cells in module \top.
+Performed a total of 4 changes.
+
+10.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\CLOCK_MIXER'.
+Finding identical cells in module `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider'.
+Finding identical cells in module `\tap'.
+Finding identical cells in module `\opcg'.
+Finding identical cells in module `\ana_ctrl'.
+Finding identical cells in module `\dsp'.
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+10.6. Executing OPT_DFF pass (perform DFF optimizations).
+Adding EN signal on $procdff$380 ($adff) from module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider (D = $not$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:61$178_Y, Q = \clk_r).
+Adding EN signal on $procdff$420 ($adff) from module tap (D = { \cmd [6:0] \tdi }, Q = \cmd).
+Adding EN signal on $procdff$460 ($adff) from module ana_ctrl (D = $procmux$241_Y, Q = \meas_phase).
+Adding EN signal on $procdff$467 ($dff) from module dsp (D = \alu_q [11:0], Q = \reg_y).
+Adding EN signal on $procdff$468 ($dff) from module dsp (D = \alu_q [11:0], Q = \reg_x).
+Adding EN signal on $procdff$469 ($dff) from module dsp (D = \alu_q [9:0], Q = \reg_temp).
+Adding EN signal on $procdff$470 ($dff) from module dsp (D = \alu_q [9:0], Q = \reg_sensitivity).
+Adding EN signal on $procdff$471 ($dff) from module dsp (D = \alu_q [9:0], Q = \reg_offset).
+Adding EN signal on $procdff$472 ($dff) from module dsp (D = \alu_q [11:0], Q = \reg_accu).
+Adding EN signal on $procdff$482 ($adff) from module dsp (D = \meas_state, Q = \meas_state_delayed).
+Adding EN signal on $procdff$477 ($adff) from module dsp (D = $procmux$315_Y, Q = \dsp_state).
+Adding EN signal on $procdff$466 ($dff) from module dsp (D = \alu_q [11:0], Q = \reg_z).
+
+10.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \CLOCK_MIXER..
+Finding unused cells or wires in module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider..
+Finding unused cells or wires in module \tap..
+Finding unused cells or wires in module \opcg..
+Finding unused cells or wires in module \ana_ctrl..
+Finding unused cells or wires in module \dsp..
+Finding unused cells or wires in module \top..
+Removed 95 unused cells and 313 unused wires.
+<suppressed ~121 debug messages>
+
+10.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.
+Optimizing module CLOCK_MIXER.
+Optimizing module ana_ctrl.
+<suppressed ~1 debug messages>
+Optimizing module dsp.
+Optimizing module opcg.
+Optimizing module tap.
+Optimizing module top.
+
+10.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+10.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \CLOCK_MIXER..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \ana_ctrl..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \dsp..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \opcg..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \tap..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \top..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+<suppressed ~37 debug messages>
+
+10.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.
+  Optimizing cells in module \CLOCK_MIXER.
+  Optimizing cells in module \ana_ctrl.
+  Optimizing cells in module \dsp.
+  Optimizing cells in module \opcg.
+  Optimizing cells in module \tap.
+  Optimizing cells in module \top.
+Performed a total of 0 changes.
+
+10.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider'.
+Finding identical cells in module `\CLOCK_MIXER'.
+Finding identical cells in module `\ana_ctrl'.
+Finding identical cells in module `\dsp'.
+Finding identical cells in module `\opcg'.
+Finding identical cells in module `\tap'.
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+10.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+10.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider..
+Finding unused cells or wires in module \CLOCK_MIXER..
+Finding unused cells or wires in module \ana_ctrl..
+Finding unused cells or wires in module \dsp..
+Finding unused cells or wires in module \opcg..
+Finding unused cells or wires in module \tap..
+Finding unused cells or wires in module \top..
+
+10.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.
+Optimizing module CLOCK_MIXER.
+Optimizing module ana_ctrl.
+Optimizing module dsp.
+Optimizing module opcg.
+Optimizing module tap.
+Optimizing module top.
+
+10.16. Finished fast OPT passes. (There is nothing left to do.)
+
+11. Executing FSM pass (extract and optimize FSM).
+
+11.1. Executing FSM_DETECT pass (finding FSMs in design).
+Not marking ana_ctrl.meas_state as FSM state register:
+    Register is connected to module port.
+    Users of register don't seem to benefit from recoding.
+Found FSM state register opcg.state.
+Not marking tap.state as FSM state register:
+    Users of register don't seem to benefit from recoding.
+
+11.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+Extracting FSM `\state' from module `\opcg'.
+  found $adff cell for state register: $procdff$430
+  root of input selection tree: $0\state[2:0]
+  found reset state: 3'000 (from async reset)
+  found ctrl input: $eq$/home/lcr/Documents/drivers/tap/rtl/opcg.v:82$103_Y
+  found ctrl input: $0\exe_done_resync[1:0] [0]
+  found ctrl input: $procmux$224_CMP
+  found ctrl input: $eq$/home/lcr/Documents/drivers/tap/rtl/opcg.v:82$101_Y
+  found ctrl input: $eq$/home/lcr/Documents/drivers/tap/rtl/opcg.v:82$100_Y
+  found ctrl input: $procmux$227_CMP
+  found ctrl input: $0\tck_enable[0:0]
+  found ctrl input: $procmux$229_CMP
+  found ctrl input: \in_app_resync [1]
+  found state code: 3'010
+  found ctrl input: \scan_exe_resync [2]
+  found state code: 3'001
+  found state code: 3'101
+  found state code: 3'100
+  found state code: 3'110
+  found state code: 3'111
+  found state code: 3'011
+  found ctrl output: $eq$/home/lcr/Documents/drivers/tap/rtl/opcg.v:82$103_Y
+  found ctrl output: $0\exe_done_resync[1:0] [0]
+  found ctrl output: $procmux$224_CMP
+  found ctrl output: $eq$/home/lcr/Documents/drivers/tap/rtl/opcg.v:82$101_Y
+  found ctrl output: $eq$/home/lcr/Documents/drivers/tap/rtl/opcg.v:82$100_Y
+  found ctrl output: $procmux$227_CMP
+  found ctrl output: $0\tck_enable[0:0]
+  found ctrl output: $procmux$229_CMP
+  ctrl inputs: { \in_app_resync [1] \scan_exe_resync [2] }
+  ctrl outputs: { $procmux$229_CMP $procmux$227_CMP $procmux$224_CMP $0\tck_enable[0:0] $eq$/home/lcr/Documents/drivers/tap/rtl/opcg.v:82$103_Y $eq$/home/lcr/Documents/drivers/tap/rtl/opcg.v:82$101_Y $eq$/home/lcr/Documents/drivers/tap/rtl/opcg.v:82$100_Y $0\exe_done_resync[1:0] [0] $0\state[2:0] }
+  transition:      3'000 2'0- ->      3'001 11'10000000001
+  transition:      3'000 2'1- ->      3'010 11'10000000010
+  transition:      3'100 2'-- ->      3'101 11'00100000101
+  transition:      3'010 2'0- ->      3'000 11'00001000000
+  transition:      3'010 2'1- ->      3'010 11'00001000010
+  transition:      3'110 2'-- ->      3'100 11'00000100100
+  transition:      3'001 2'00 ->      3'001 11'00010000001
+  transition:      3'001 2'10 ->      3'000 11'00010000000
+  transition:      3'001 2'-1 ->      3'011 11'00010000011
+  transition:      3'101 2'-0 ->      3'001 11'00000001001
+  transition:      3'101 2'-1 ->      3'101 11'00000001101
+  transition:      3'011 2'-- ->      3'111 11'01000000111
+  transition:      3'111 2'-- ->      3'110 11'00000010110
+
+11.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+Optimizing FSM `$fsm$\state$509' from module `\opcg'.
+
+11.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider..
+Finding unused cells or wires in module \CLOCK_MIXER..
+Finding unused cells or wires in module \ana_ctrl..
+Finding unused cells or wires in module \dsp..
+Finding unused cells or wires in module \opcg..
+Finding unused cells or wires in module \tap..
+Finding unused cells or wires in module \top..
+Removed 15 unused cells and 15 unused wires.
+<suppressed ~16 debug messages>
+
+11.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+Optimizing FSM `$fsm$\state$509' from module `\opcg'.
+  Removing unused output signal $0\state[2:0] [0].
+  Removing unused output signal $0\state[2:0] [1].
+  Removing unused output signal $0\state[2:0] [2].
+  Removing unused output signal $procmux$224_CMP.
+  Removing unused output signal $procmux$227_CMP.
+  Removing unused output signal $procmux$229_CMP.
+
+11.6. Executing FSM_EXPAND pass (merging auxiliary logic into FSMs).
+
+Expanding FSM `$fsm$\state$509' from module `\opcg':
+  merging $or cell $or$/home/lcr/Documents/drivers/tap/rtl/opcg.v:82$102.
+  merging $or cell $or$/home/lcr/Documents/drivers/tap/rtl/opcg.v:82$104.
+Optimizing FSM `$fsm$\state$509' from module `\opcg'.
+  Optimize handling of signal $eq$/home/lcr/Documents/drivers/tap/rtl/opcg.v:82$100_Y that is connected to input 2 and output 1.
+  Optimize handling of signal $eq$/home/lcr/Documents/drivers/tap/rtl/opcg.v:82$101_Y that is connected to input 2 and output 2.
+  Optimize handling of signal $eq$/home/lcr/Documents/drivers/tap/rtl/opcg.v:82$103_Y that is connected to input 3 and output 3.
+  Optimize handling of signal $or$/home/lcr/Documents/drivers/tap/rtl/opcg.v:82$102_Y that is connected to input 2 and output 5.
+  merged 2 cells into FSM.
+
+11.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider..
+Finding unused cells or wires in module \CLOCK_MIXER..
+Finding unused cells or wires in module \ana_ctrl..
+Finding unused cells or wires in module \dsp..
+Finding unused cells or wires in module \opcg..
+Finding unused cells or wires in module \tap..
+Finding unused cells or wires in module \top..
+Removed 0 unused cells and 4 unused wires.
+<suppressed ~1 debug messages>
+
+11.8. Executing FSM_OPT pass (simple optimizations of FSMs).
+Optimizing FSM `$fsm$\state$509' from module `\opcg'.
+  Removing unused output signal $eq$/home/lcr/Documents/drivers/tap/rtl/opcg.v:82$100_Y.
+  Removing unused output signal $eq$/home/lcr/Documents/drivers/tap/rtl/opcg.v:82$101_Y.
+  Removing unused output signal $eq$/home/lcr/Documents/drivers/tap/rtl/opcg.v:82$103_Y.
+  Removing unused output signal $or$/home/lcr/Documents/drivers/tap/rtl/opcg.v:82$102_Y.
+
+11.9. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+Recoding FSM `$fsm$\state$509' from module `\opcg' using `auto' encoding:
+  mapping auto encoding to `one-hot` for this FSM.
+  000 -> -------1
+  100 -> ------1-
+  010 -> -----1--
+  110 -> ----1---
+  001 -> ---1----
+  101 -> --1-----
+  011 -> -1------
+  111 -> 1-------
+
+11.10. Executing FSM_INFO pass (dumping all available information on FSM cells).
+
+FSM `$fsm$\state$509' from module `opcg':
+-------------------------------------
+
+  Information on FSM $fsm$\state$509 (\state):
+
+  Number of input signals:    2
+  Number of output signals:   3
+  Number of state bits:       8
+
+  Input signals:
+    0: \scan_exe_resync [2]
+    1: \in_app_resync [1]
+
+  Output signals:
+    0: $0\exe_done_resync[1:0] [0]
+    1: $0\tck_enable[0:0]
+    2: $0\pulse_enable[0:0]
+
+  State encoding:
+    0: 8'-------1  <RESET STATE>
+    1: 8'------1-
+    2: 8'-----1--
+    3: 8'----1---
+    4: 8'---1----
+    5: 8'--1-----
+    6: 8'-1------
+    7: 8'1-------
+
+  Transition Table (state_in, ctrl_in, state_out, ctrl_out):
+      0:     0 2'1-   ->     2 3'000
+      1:     0 2'0-   ->     4 3'000
+      2:     1 2'--   ->     5 3'000
+      3:     2 2'0-   ->     0 3'100
+      4:     2 2'1-   ->     2 3'100
+      5:     3 2'--   ->     1 3'100
+      6:     4 2'10   ->     0 3'010
+      7:     4 2'00   ->     4 3'010
+      8:     4 2'-1   ->     6 3'010
+      9:     5 2'-0   ->     4 3'001
+     10:     5 2'-1   ->     5 3'001
+     11:     6 2'--   ->     7 3'000
+     12:     7 2'--   ->     3 3'100
+
+-------------------------------------
+
+11.11. Executing FSM_MAP pass (mapping FSMs to basic logic).
+Mapping FSM `$fsm$\state$509' from module `\opcg'.
+
+12. Executing OPT pass (performing simple optimizations).
+
+12.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.
+Optimizing module CLOCK_MIXER.
+Optimizing module ana_ctrl.
+Optimizing module dsp.
+Optimizing module opcg.
+<suppressed ~7 debug messages>
+Optimizing module tap.
+Optimizing module top.
+
+12.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider'.
+Finding identical cells in module `\CLOCK_MIXER'.
+Finding identical cells in module `\ana_ctrl'.
+Finding identical cells in module `\dsp'.
+Finding identical cells in module `\opcg'.
+<suppressed ~3 debug messages>
+Finding identical cells in module `\tap'.
+Finding identical cells in module `\top'.
+Removed a total of 1 cells.
+
+12.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \CLOCK_MIXER..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \ana_ctrl..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \dsp..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \opcg..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \tap..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \top..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+<suppressed ~30 debug messages>
+
+12.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.
+  Optimizing cells in module \CLOCK_MIXER.
+  Optimizing cells in module \ana_ctrl.
+  Optimizing cells in module \dsp.
+  Optimizing cells in module \opcg.
+  Optimizing cells in module \tap.
+  Optimizing cells in module \top.
+Performed a total of 0 changes.
+
+12.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider'.
+Finding identical cells in module `\CLOCK_MIXER'.
+Finding identical cells in module `\ana_ctrl'.
+Finding identical cells in module `\dsp'.
+Finding identical cells in module `\opcg'.
+Finding identical cells in module `\tap'.
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+12.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+12.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider..
+Finding unused cells or wires in module \CLOCK_MIXER..
+Finding unused cells or wires in module \ana_ctrl..
+Finding unused cells or wires in module \dsp..
+Finding unused cells or wires in module \opcg..
+Finding unused cells or wires in module \tap..
+Finding unused cells or wires in module \top..
+Removed 0 unused cells and 12 unused wires.
+<suppressed ~1 debug messages>
+
+12.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.
+Optimizing module CLOCK_MIXER.
+Optimizing module ana_ctrl.
+Optimizing module dsp.
+Optimizing module opcg.
+Optimizing module tap.
+Optimizing module top.
+
+12.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+12.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \CLOCK_MIXER..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \ana_ctrl..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \dsp..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \opcg..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \tap..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \top..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+<suppressed ~30 debug messages>
+
+12.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.
+  Optimizing cells in module \CLOCK_MIXER.
+  Optimizing cells in module \ana_ctrl.
+  Optimizing cells in module \dsp.
+  Optimizing cells in module \opcg.
+  Optimizing cells in module \tap.
+  Optimizing cells in module \top.
+Performed a total of 0 changes.
+
+12.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider'.
+Finding identical cells in module `\CLOCK_MIXER'.
+Finding identical cells in module `\ana_ctrl'.
+Finding identical cells in module `\dsp'.
+Finding identical cells in module `\opcg'.
+Finding identical cells in module `\tap'.
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+12.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+12.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider..
+Finding unused cells or wires in module \CLOCK_MIXER..
+Finding unused cells or wires in module \ana_ctrl..
+Finding unused cells or wires in module \dsp..
+Finding unused cells or wires in module \opcg..
+Finding unused cells or wires in module \tap..
+Finding unused cells or wires in module \top..
+
+12.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.
+Optimizing module CLOCK_MIXER.
+Optimizing module ana_ctrl.
+Optimizing module dsp.
+Optimizing module opcg.
+Optimizing module tap.
+Optimizing module top.
+
+12.16. Finished fast OPT passes. (There is nothing left to do.)
+
+13. Executing MEMORY pass.
+
+13.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+13.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+13.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+13.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+13.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+13.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider..
+Finding unused cells or wires in module \CLOCK_MIXER..
+Finding unused cells or wires in module \ana_ctrl..
+Finding unused cells or wires in module \dsp..
+Finding unused cells or wires in module \opcg..
+Finding unused cells or wires in module \tap..
+Finding unused cells or wires in module \top..
+
+13.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+13.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+13.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider..
+Finding unused cells or wires in module \CLOCK_MIXER..
+Finding unused cells or wires in module \ana_ctrl..
+Finding unused cells or wires in module \dsp..
+Finding unused cells or wires in module \opcg..
+Finding unused cells or wires in module \tap..
+Finding unused cells or wires in module \top..
+
+13.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+13.11. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+14. Executing OPT pass (performing simple optimizations).
+
+14.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.
+Optimizing module CLOCK_MIXER.
+Optimizing module ana_ctrl.
+Optimizing module dsp.
+Optimizing module opcg.
+Optimizing module tap.
+Optimizing module top.
+
+14.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider'.
+Finding identical cells in module `\CLOCK_MIXER'.
+Finding identical cells in module `\ana_ctrl'.
+Finding identical cells in module `\dsp'.
+Finding identical cells in module `\opcg'.
+Finding identical cells in module `\tap'.
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+14.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \CLOCK_MIXER..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \ana_ctrl..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \dsp..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \opcg..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \tap..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \top..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+<suppressed ~30 debug messages>
+
+14.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.
+  Optimizing cells in module \CLOCK_MIXER.
+  Optimizing cells in module \ana_ctrl.
+  Optimizing cells in module \dsp.
+  Optimizing cells in module \opcg.
+  Optimizing cells in module \tap.
+  Optimizing cells in module \top.
+Performed a total of 0 changes.
+
+14.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider'.
+Finding identical cells in module `\CLOCK_MIXER'.
+Finding identical cells in module `\ana_ctrl'.
+Finding identical cells in module `\dsp'.
+Finding identical cells in module `\opcg'.
+Finding identical cells in module `\tap'.
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+14.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+14.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider..
+Finding unused cells or wires in module \CLOCK_MIXER..
+Finding unused cells or wires in module \ana_ctrl..
+Finding unused cells or wires in module \dsp..
+Finding unused cells or wires in module \opcg..
+Finding unused cells or wires in module \tap..
+Finding unused cells or wires in module \top..
+
+14.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider.
+Optimizing module CLOCK_MIXER.
+Optimizing module ana_ctrl.
+Optimizing module dsp.
+Optimizing module opcg.
+Optimizing module tap.
+Optimizing module top.
+
+14.9. Finished fast OPT passes. (There is nothing left to do.)
+
+15. Executing Verilog backend.
+Dumping module `$paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider'.
+  renaming `$sub$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:51$172' to `_gen__29_'.
+  renaming `$reduce_or$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:54$173' to `_gen__28_'.
+  renaming `$reduce_or$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:41$163' to `_gen__27_'.
+  renaming `$procmux$196' to `_gen__26_'.
+  renaming `$procdff$385' to `_gen__25_'.
+  renaming `$procdff$375' to `_gen__24_'.
+  renaming `$procdff$370' to `_gen__23_'.
+  renaming `$or$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:61$177' to `_gen__22_'.
+  renaming `$or$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:42$165' to `_gen__21_'.
+  renaming `$not$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:61$178' to `_gen__20_'.
+  renaming `$not$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:49$168' to `_gen__19_'.
+  renaming `$logic_not$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:41$164' to `_gen__18_'.
+  renaming `$auto$proc_dlatch.cc:432:proc_dlatch$343' to `_gen__17_'.
+  renaming `$auto$ff.cc:337:slice$495' to `_gen__16_'.
+  renaming `$and$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:82$184' to `_gen__15_'.
+  renaming `$and$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:71$181' to `_gen__14_'.
+  renaming `$and$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:49$170' to `_gen__13_'.
+  renaming `$and$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:49$169' to `_gen__12_'.
+  renaming `$add$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:49$171' to `_gen__11_'.
+  renaming `$sub$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:51$172_Y' to `_gen__10_'.
+  renaming `$reduce_or$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:54$173_Y' to `_gen__09_'.
+  renaming `$reduce_or$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:41$163_Y' to `_gen__08_'.
+  renaming `$or$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:61$177_Y' to `_gen__07_'.
+  renaming `$not$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:61$178_Y' to `_gen__06_'.
+  renaming `$not$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:49$168_Y' to `_gen__05_'.
+  renaming `$and$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:49$170_Y' to `_gen__04_'.
+  renaming `$and$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:49$169_Y' to `_gen__03_'.
+  renaming `$add$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:49$171_Y' to `_gen__02_'.
+  renaming `$0\counter[5:0]' to `_gen__01_'.
+  renaming `$0\clk_f[0:0]' to `_gen__00_'.
+Dumping module `\CLOCK_MIXER'.
+  renaming `$or$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:12$188' to `_gen__2_'.
+  renaming `$or$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:12$187' to `_gen__1_'.
+  renaming `$or$/home/lcr/Documents/drivers/clock_divider/rtl/clock_divider.v:12$187_Y' to `_gen__0_'.
+Dumping module `\ana_ctrl'.
+  renaming `$ternary$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:64$53' to `_gen__69_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:48$47' to `_gen__68_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:47$46' to `_gen__67_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:46$45' to `_gen__66_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:45$44' to `_gen__65_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:44$43' to `_gen__64_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:43$42' to `_gen__63_'.
+  renaming `$sub$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:108$76' to `_gen__62_'.
+  renaming `$procmux$250_CMP0' to `_gen__61_'.
+  renaming `$procmux$249_CMP0' to `_gen__60_'.
+  renaming `$procmux$248_CMP0' to `_gen__59_'.
+  renaming `$procmux$247_CMP0' to `_gen__58_'.
+  renaming `$procmux$246_CMP0' to `_gen__57_'.
+  renaming `$procmux$245_CMP0' to `_gen__56_'.
+  renaming `$procmux$244' to `_gen__55_'.
+  renaming `$procmux$241' to `_gen__54_'.
+  renaming `$procmux$238' to `_gen__53_'.
+  renaming `$procmux$231' to `_gen__52_'.
+  renaming `$procdff$465' to `_gen__51_'.
+  renaming `$procdff$455' to `_gen__50_'.
+  renaming `$procdff$450' to `_gen__49_'.
+  renaming `$procdff$445' to `_gen__48_'.
+  renaming `$or$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:77$59' to `_gen__47_'.
+  renaming `$or$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:77$58' to `_gen__46_'.
+  renaming `$not$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:125$81' to `_gen__45_'.
+  renaming `$logic_or$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:64$52' to `_gen__44_'.
+  renaming `$logic_not$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:96$71' to `_gen__43_'.
+  renaming `$logic_not$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:96$69' to `_gen__42_'.
+  renaming `$logic_and$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:59$51' to `_gen__41_'.
+  renaming `$eq$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:125$80' to `_gen__40_'.
+  renaming `$eq$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:103$75' to `_gen__39_'.
+  renaming `$auto$opt_dff.cc:248:make_patterns_logic$499' to `_gen__38_'.
+  renaming `$auto$ff.cc:337:slice$497' to `_gen__37_'.
+  renaming `$and$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:96$72' to `_gen__36_'.
+  renaming `$and$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:96$70' to `_gen__35_'.
+  renaming `$and$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:95$68' to `_gen__34_'.
+  renaming `$and$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:82$63' to `_gen__33_'.
+  renaming `$and$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:81$61' to `_gen__32_'.
+  renaming `$and$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:77$57' to `_gen__31_'.
+  renaming `$and$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:125$82' to `_gen__30_'.
+  renaming `$and$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:124$79' to `_gen__29_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:64$53_Y' to `_gen__28_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:48$47_Y' to `_gen__27_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:47$46_Y' to `_gen__26_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:46$45_Y' to `_gen__25_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:45$44_Y' to `_gen__24_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:44$43_Y' to `_gen__23_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:43$42_Y' to `_gen__22_'.
+  renaming `$sub$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:108$76_Y' to `_gen__21_'.
+  renaming `$procmux$236_CMP' to `_gen__20_'.
+  renaming `$procmux$235_CMP' to `_gen__19_'.
+  renaming `$procmux$234_CMP' to `_gen__18_'.
+  renaming `$procmux$233_CMP' to `_gen__17_'.
+  renaming `$procmux$232_CMP' to `_gen__16_'.
+  renaming `$or$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:77$58_Y' to `_gen__15_'.
+  renaming `$not$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:124$78_Y' to `_gen__14_'.
+  renaming `$logic_or$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:64$52_Y' to `_gen__13_'.
+  renaming `$logic_not$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:96$71_Y' to `_gen__12_'.
+  renaming `$logic_not$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:95$66_Y' to `_gen__11_'.
+  renaming `$logic_and$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:59$51_Y' to `_gen__10_'.
+  renaming `$eq$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:59$50_Y' to `_gen__09_'.
+  renaming `$eq$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:125$80_Y' to `_gen__08_'.
+  renaming `$eq$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:103$75_Y' to `_gen__07_'.
+  renaming `$auto$opt_dff.cc:247:make_patterns_logic$498' to `_gen__06_'.
+  renaming `$and$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:95$67_Y' to `_gen__05_'.
+  renaming `$and$/home/lcr/Documents/drivers/top/rtl/ana_ctrl.v:77$57_Y' to `_gen__04_'.
+  renaming `$0\phase_update[0:0]' to `_gen__03_'.
+  renaming `$0\meas_state[2:0]' to `_gen__02_'.
+  renaming `$0\meas_phase[3:0]' to `_gen__01_'.
+  renaming `$0\counter[3:0]' to `_gen__00_'.
+Dumping module `\dsp'.
+Dumping module `\opcg'.
+  renaming `$procdff$440' to `_gen__42_'.
+  renaming `$procdff$435' to `_gen__41_'.
+  renaming `$procdff$425' to `_gen__40_'.
+  renaming `$or$/home/lcr/Documents/drivers/tap/rtl/opcg.v:94$110' to `_gen__39_'.
+  renaming `$auto$proc_dlatch.cc:432:proc_dlatch$365' to `_gen__38_'.
+  renaming `$auto$proc_dlatch.cc:432:proc_dlatch$354' to `_gen__37_'.
+  renaming `$auto$fsm_map.cc:77:implement_pattern_cache$547' to `_gen__36_'.
+  renaming `$auto$fsm_map.cc:77:implement_pattern_cache$543' to `_gen__35_'.
+  renaming `$auto$fsm_map.cc:77:implement_pattern_cache$539' to `_gen__34_'.
+  renaming `$auto$fsm_map.cc:77:implement_pattern_cache$524' to `_gen__33_'.
+  renaming `$auto$fsm_map.cc:172:map_fsm$520' to `_gen__32_'.
+  renaming `$auto$fsm_map.cc:144:implement_pattern_cache$560' to `_gen__31_'.
+  renaming `$auto$fsm_map.cc:144:implement_pattern_cache$555' to `_gen__30_'.
+  renaming `$auto$fsm_map.cc:144:implement_pattern_cache$550' to `_gen__29_'.
+  renaming `$auto$fsm_map.cc:144:implement_pattern_cache$531' to `_gen__28_'.
+  renaming `$auto$fsm_map.cc:121:implement_pattern_cache$559' to `_gen__27_'.
+  renaming `$auto$fsm_map.cc:121:implement_pattern_cache$554' to `_gen__26_'.
+  renaming `$auto$fsm_map.cc:121:implement_pattern_cache$549' to `_gen__25_'.
+  renaming `$auto$fsm_map.cc:121:implement_pattern_cache$545' to `_gen__24_'.
+  renaming `$auto$fsm_map.cc:121:implement_pattern_cache$541' to `_gen__23_'.
+  renaming `$auto$fsm_map.cc:121:implement_pattern_cache$537' to `_gen__22_'.
+  renaming `$auto$fsm_map.cc:121:implement_pattern_cache$530' to `_gen__21_'.
+  renaming `$auto$fsm_map.cc:121:implement_pattern_cache$526' to `_gen__20_'.
+  renaming `$auto$fsm_map.cc:105:implement_pattern_cache$535' to `_gen__19_'.
+  renaming `$and$/home/lcr/Documents/drivers/tap/rtl/opcg.v:94$109' to `_gen__18_'.
+  renaming `$and$/home/lcr/Documents/drivers/tap/rtl/opcg.v:94$108' to `_gen__17_'.
+  renaming `$auto$fsm_map.cc:74:implement_pattern_cache$542' to `_gen__16_'.
+  renaming `$auto$fsm_map.cc:74:implement_pattern_cache$538' to `_gen__15_'.
+  renaming `$auto$fsm_map.cc:74:implement_pattern_cache$527' to `_gen__14_'.
+  renaming `$auto$fsm_map.cc:74:implement_pattern_cache$523' to `_gen__13_'.
+  renaming `$auto$fsm_map.cc:170:map_fsm$519' to `_gen__12_'.
+  renaming `$auto$fsm_map.cc:118:implement_pattern_cache$558' to `_gen__11_'.
+  renaming `$auto$fsm_map.cc:118:implement_pattern_cache$553' to `_gen__10_'.
+  renaming `$auto$fsm_map.cc:118:implement_pattern_cache$548' to `_gen__09_'.
+  renaming `$auto$fsm_map.cc:118:implement_pattern_cache$544' to `_gen__08_'.
+  renaming `$auto$fsm_map.cc:118:implement_pattern_cache$540' to `_gen__07_'.
+  renaming `$auto$fsm_map.cc:118:implement_pattern_cache$536' to `_gen__06_'.
+  renaming `$auto$fsm_map.cc:118:implement_pattern_cache$529' to `_gen__05_'.
+  renaming `$auto$fsm_map.cc:118:implement_pattern_cache$525' to `_gen__04_'.
+  renaming `$auto$fsm_map.cc:102:implement_pattern_cache$534' to `_gen__03_'.
+  renaming `$and$/home/lcr/Documents/drivers/tap/rtl/opcg.v:94$109_Y' to `_gen__02_'.
+  renaming `$and$/home/lcr/Documents/drivers/tap/rtl/opcg.v:94$108_Y' to `_gen__01_'.
+  renaming `$0\pulse_enable[0:0]' to `_gen__00_'.
+Dumping module `\tap'.
+  renaming `$ternary$/home/lcr/Documents/drivers/tap/rtl/tap.v:74$136' to `_gen__89_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/tap/rtl/tap.v:73$135' to `_gen__88_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/tap/rtl/tap.v:72$132' to `_gen__87_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/tap/rtl/tap.v:71$133' to `_gen__86_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/tap/rtl/tap.v:70$134' to `_gen__85_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/tap/rtl/tap.v:69$125' to `_gen__84_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/tap/rtl/tap.v:121$154' to `_gen__83_'.
+  renaming `$reduce_and$/home/lcr/Documents/drivers/tap/rtl/tap.v:92$142' to `_gen__82_'.
+  renaming `$reduce_and$/home/lcr/Documents/drivers/tap/rtl/tap.v:121$152' to `_gen__81_'.
+  renaming `$procmux$211_CMP0' to `_gen__80_'.
+  renaming `$procmux$210_CMP0' to `_gen__79_'.
+  renaming `$procmux$209_CMP0' to `_gen__78_'.
+  renaming `$procmux$208_CMP0' to `_gen__77_'.
+  renaming `$procmux$207_CMP0' to `_gen__76_'.
+  renaming `$procmux$206' to `_gen__75_'.
+  renaming `$procmux$202' to `_gen__74_'.
+  renaming `$procmux$199' to `_gen__73_'.
+  renaming `$procdff$415' to `_gen__72_'.
+  renaming `$procdff$410' to `_gen__71_'.
+  renaming `$procdff$405' to `_gen__70_'.
+  renaming `$procdff$400' to `_gen__69_'.
+  renaming `$procdff$395' to `_gen__68_'.
+  renaming `$procdff$390' to `_gen__67_'.
+  renaming `$or$/home/lcr/Documents/drivers/tap/rtl/tap.v:126$160' to `_gen__66_'.
+  renaming `$ne$/home/lcr/Documents/drivers/tap/rtl/tap.v:93$144' to `_gen__65_'.
+  renaming `$ne$/home/lcr/Documents/drivers/tap/rtl/tap.v:84$139' to `_gen__64_'.
+  renaming `$logic_or$/home/lcr/Documents/drivers/tap/rtl/tap.v:86$140' to `_gen__63_'.
+  renaming `$logic_or$/home/lcr/Documents/drivers/tap/rtl/tap.v:44$119' to `_gen__62_'.
+  renaming `$logic_or$/home/lcr/Documents/drivers/tap/rtl/tap.v:44$117' to `_gen__61_'.
+  renaming `$logic_not$/home/lcr/Documents/drivers/tap/rtl/tap.v:44$113' to `_gen__60_'.
+  renaming `$logic_and$/home/lcr/Documents/drivers/tap/rtl/tap.v:72$131' to `_gen__59_'.
+  renaming `$logic_and$/home/lcr/Documents/drivers/tap/rtl/tap.v:71$129' to `_gen__58_'.
+  renaming `$logic_and$/home/lcr/Documents/drivers/tap/rtl/tap.v:70$127' to `_gen__57_'.
+  renaming `$logic_and$/home/lcr/Documents/drivers/tap/rtl/tap.v:69$124' to `_gen__56_'.
+  renaming `$logic_and$/home/lcr/Documents/drivers/tap/rtl/tap.v:44$115' to `_gen__55_'.
+  renaming `$logic_and$/home/lcr/Documents/drivers/tap/rtl/tap.v:122$158' to `_gen__54_'.
+  renaming `$gt$/home/lcr/Documents/drivers/tap/rtl/tap.v:122$156' to `_gen__53_'.
+  renaming `$ge$/home/lcr/Documents/drivers/tap/rtl/tap.v:93$143' to `_gen__52_'.
+  renaming `$eq$/home/lcr/Documents/drivers/tap/rtl/tap.v:72$130' to `_gen__51_'.
+  renaming `$eq$/home/lcr/Documents/drivers/tap/rtl/tap.v:71$128' to `_gen__50_'.
+  renaming `$eq$/home/lcr/Documents/drivers/tap/rtl/tap.v:70$126' to `_gen__49_'.
+  renaming `$eq$/home/lcr/Documents/drivers/tap/rtl/tap.v:69$123' to `_gen__48_'.
+  renaming `$eq$/home/lcr/Documents/drivers/tap/rtl/tap.v:126$159' to `_gen__47_'.
+  renaming `$eq$/home/lcr/Documents/drivers/tap/rtl/tap.v:105$149' to `_gen__46_'.
+  renaming `$eq$/home/lcr/Documents/drivers/tap/rtl/tap.v:104$148' to `_gen__45_'.
+  renaming `$auto$ff.cc:337:slice$496' to `_gen__44_'.
+  renaming `$and$/home/lcr/Documents/drivers/tap/rtl/tap.v:93$145' to `_gen__43_'.
+  renaming `$and$/home/lcr/Documents/drivers/tap/rtl/tap.v:131$162' to `_gen__42_'.
+  renaming `$and$/home/lcr/Documents/drivers/tap/rtl/tap.v:130$161' to `_gen__41_'.
+  renaming `$add$/home/lcr/Documents/drivers/tap/rtl/tap.v:87$141' to `_gen__40_'.
+  renaming `$add$/home/lcr/Documents/drivers/tap/rtl/tap.v:121$155' to `_gen__39_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/tap/rtl/tap.v:74$136_Y' to `_gen__38_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/tap/rtl/tap.v:73$135_Y' to `_gen__37_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/tap/rtl/tap.v:72$132_Y' to `_gen__36_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/tap/rtl/tap.v:71$133_Y' to `_gen__35_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/tap/rtl/tap.v:70$134_Y' to `_gen__34_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/tap/rtl/tap.v:69$125_Y' to `_gen__33_'.
+  renaming `$ternary$/home/lcr/Documents/drivers/tap/rtl/tap.v:121$154_Y' to `_gen__32_'.
+  renaming `$reduce_and$/home/lcr/Documents/drivers/tap/rtl/tap.v:121$152_Y' to `_gen__31_'.
+  renaming `$procmux$208_CMP' to `_gen__30_'.
+  renaming `$procmux$207_CMP' to `_gen__29_'.
+  renaming `$procmux$199_Y' to `_gen__28_'.
+  renaming `$ne$/home/lcr/Documents/drivers/tap/rtl/tap.v:93$144_Y' to `_gen__27_'.
+  renaming `$ne$/home/lcr/Documents/drivers/tap/rtl/tap.v:84$139_Y' to `_gen__26_'.
+  renaming `$logic_or$/home/lcr/Documents/drivers/tap/rtl/tap.v:86$140_Y' to `_gen__25_'.
+  renaming `$logic_or$/home/lcr/Documents/drivers/tap/rtl/tap.v:44$119_Y' to `_gen__24_'.
+  renaming `$logic_or$/home/lcr/Documents/drivers/tap/rtl/tap.v:44$117_Y' to `_gen__23_'.
+  renaming `$logic_not$/home/lcr/Documents/drivers/tap/rtl/tap.v:44$113_Y' to `_gen__22_'.
+  renaming `$logic_and$/home/lcr/Documents/drivers/tap/rtl/tap.v:72$131_Y' to `_gen__21_'.
+  renaming `$logic_and$/home/lcr/Documents/drivers/tap/rtl/tap.v:71$129_Y' to `_gen__20_'.
+  renaming `$logic_and$/home/lcr/Documents/drivers/tap/rtl/tap.v:70$127_Y' to `_gen__19_'.
+  renaming `$logic_and$/home/lcr/Documents/drivers/tap/rtl/tap.v:69$124_Y' to `_gen__18_'.
+  renaming `$logic_and$/home/lcr/Documents/drivers/tap/rtl/tap.v:44$115_Y' to `_gen__17_'.
+  renaming `$gt$/home/lcr/Documents/drivers/tap/rtl/tap.v:122$156_Y' to `_gen__16_'.
+  renaming `$ge$/home/lcr/Documents/drivers/tap/rtl/tap.v:93$143_Y' to `_gen__15_'.
+  renaming `$eq$/home/lcr/Documents/drivers/tap/rtl/tap.v:72$130_Y' to `_gen__14_'.
+  renaming `$eq$/home/lcr/Documents/drivers/tap/rtl/tap.v:71$128_Y' to `_gen__13_'.
+  renaming `$eq$/home/lcr/Documents/drivers/tap/rtl/tap.v:70$126_Y' to `_gen__12_'.
+  renaming `$eq$/home/lcr/Documents/drivers/tap/rtl/tap.v:69$123_Y' to `_gen__11_'.
+  renaming `$eq$/home/lcr/Documents/drivers/tap/rtl/tap.v:44$116_Y' to `_gen__10_'.
+  renaming `$eq$/home/lcr/Documents/drivers/tap/rtl/tap.v:44$114_Y' to `_gen__09_'.
+  renaming `$eq$/home/lcr/Documents/drivers/tap/rtl/tap.v:126$159_Y' to `_gen__08_'.
+  renaming `$eq$/home/lcr/Documents/drivers/tap/rtl/tap.v:122$157_Y' to `_gen__07_'.
+  renaming `$add$/home/lcr/Documents/drivers/tap/rtl/tap.v:87$141_Y' to `_gen__06_'.
+  renaming `$add$/home/lcr/Documents/drivers/tap/rtl/tap.v:121$155_Y' to `_gen__05_'.
+  renaming `$0\window_elapsed[0:0]' to `_gen__04_'.
+  renaming `$0\window_counter[4:0]' to `_gen__03_'.
+  renaming `$0\tscan_exe[0:0]' to `_gen__02_'.
+  renaming `$0\tscan_enable[0:0]' to `_gen__01_'.
+  renaming `$0\counter[4:0]' to `_gen__00_'.
+Dumping module `\top'.
+  renaming `$and$/home/lcr/Documents/drivers/top/rtl/top.v:133$1' to `_gen__0_'.
+
+16. Printing statistics.
+
+=== $paramod$b564b14d9fd308e618b07377286ecb02226d23aa\clock_divider ===
+
+        +-------------------Count including submodules.
+        |        +----------Local count, excluding submodules.
+        |        | 
+       30       25 wires
+       95       90 wire bits
+       18       14 public wires
+       32       28 public wire bits
+       10        6 ports
+       16       12 port bits
+        -        - memories
+        -        - memory bits
+        -        - processes
+       21       19 cells
+        1        1   $add
+        3        3   $adff
+        1        1   $adffe
+        4        4   $and
+        1        1   $dlatch
+        1        1   $logic_not
+        1        1   $mux
+        2        2   $not
+        4        2   $or
+        2        2   $reduce_or
+        1        1   $sub
+        1        1 submodules
+        1        1   CLOCK_MIXER
+
+=== CLOCK_MIXER ===
+
+        +-------------------Count including submodules.
+        |        +----------Local count, excluding submodules.
+        |        | 
+        5        5 wires
+        5        5 wire bits
+        4        4 public wires
+        4        4 public wire bits
+        4        4 ports
+        4        4 port bits
+        -        - memories
+        -        - memory bits
+        -        - processes
+        2        2 cells
+        2        2   $or
+
+=== ana_ctrl ===
+
+        +-------------------Count including submodules.
+        |        +----------Local count, excluding submodules.
+        |        | 
+       47       47 wires
+      119      119 wire bits
+       18       18 public wires
+       36       36 public wire bits
+       14       14 ports
+       25       25 port bits
+        -        - memories
+        -        - memory bits
+        -        - processes
+       41       41 cells
+        4        4   $adff
+        1        1   $adffe
+        8        8   $and
+        6        6   $eq
+        1        1   $logic_and
+        4        4   $logic_not
+        1        1   $logic_or
+        9        9   $mux
+        1        1   $not
+        2        2   $or
+        2        2   $pmux
+        1        1   $reduce_bool
+        1        1   $sub
+ERROR: uncaught exception during Yosys command invoked from TCL

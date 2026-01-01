@@ -1,0 +1,12 @@
++incdir+../rtl/ 
+../../clock_divider/rtl/clock_divider.v 
+../../tap/rtl/tap.v 
+../../tap/rtl/opcg.v 
+../rtl/ana_ctrl.v 
+../rtl/dsp.v 
+../rtl/top.v 
+./environments/hallplate.sv
+./environments/chip.sv
+../../tap/testcases/tap_master.sv
+./environments/testbench.sv
+./testcase_iddq.sv
