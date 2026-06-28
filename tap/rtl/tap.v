@@ -1,22 +1,25 @@
 // Basic Test Controller
 module tap (
-	input  wire prim_gclk,
-	input  wire prim_rstb,
+	input  wire       prim_gclk,
+	input  wire       prim_rstb,
 	// tap interface
-	input  wire trstb,
-	input  wire tck,
-	input  wire tdi,
-	output wire tdo,
-	output wire tde,
+	input  wire       trstb,
+	input  wire       tck,
+	input  wire       tdi,
+	output wire       tdo,
+	output wire       tde,
+	// external command
+	output wire       prim_cmd_it,
+	output reg  [7:0] prim_cmd,
 	// oscillator delay test
-	input  wire texe_done,
+	input  wire       texe_done,
 	// scan chain interface
-	input  wire tscan_end,
-	output wire tscan_start,
+	input  wire       tscan_end,
+	output wire       tscan_start,
 	// modes
-	output reg  tscan_enable,
-	output reg  tscan_exe,
-	output wire tapp_active
+	output reg        tscan_enable,
+	output reg        tscan_exe,
+	output wire       tapp_active
 );
 
 	parameter integer ENTRY_WINDOW = 'd30;
@@ -35,18 +38,73 @@ module tap (
 	
 	// dummy tap
 	reg  [7:0] cmd;
-	wire       cmd_filled;
+	reg  [7:0] sr;
+	wire       sr_filled;
+
+	always @(negedge tck, negedge trstb)
+	begin
+		if (!trstb)
+			sr <= 8'h00;
+		else if ((!sr_filled && (state == S_TST_CMD)) || (state == S_TST_KEY) || (state == S_TST_INIT))
+			sr <= {sr[6:0], tdi};
+		else
+			sr <= sr;
+	end
 
 	always @(negedge tck, negedge trstb)
 	begin
 		if (!trstb)
 			cmd <= 8'h00;
-		else if ((!cmd_filled && (state == S_TST_CMD)) || (state == S_TST_KEY) || (state == S_TST_INIT))
-			cmd <= {cmd[6:0], tdi};
+		else if (sr_filled && (state == S_TST_SCAN))
+			cmd <= sr;
 		else
 			cmd <= cmd;
 	end
 
+	// recirculation mux cmd for external command
+	reg toggle_sr_filled;
+	reg [2:0] sync_cmd_it;
+
+	always @(negedge tck, negedge trstb)
+	begin
+		if (!trstb)
+		begin
+			toggle_sr_filled <= 1'b0;
+		end else if (&sync_cmd_it[2:1])
+		begin
+			toggle_sr_filled <= 1'b0;
+		end else if (sr_filled & (state == S_TST_SCAN))
+		begin
+			toggle_sr_filled <= 1'b1;
+		end
+	end
+
+	always @(posedge prim_gclk, negedge prim_rstb)
+	begin
+		if (!prim_rstb)
+		begin
+			sync_cmd_it <= 3'b000;
+		end else
+		begin
+			sync_cmd_it <= {sync_cmd_it[1:0], toggle_sr_filled};
+		end
+	end
+
+	assign prim_cmd_it = !sync_cmd_it[2] & sync_cmd_it[1];
+
+	always @(posedge prim_gclk, negedge prim_rstb)
+	begin
+		if (!prim_rstb)
+		begin
+			prim_cmd <= 3'b000;
+		end else if (prim_cmd_it)
+		begin
+			prim_cmd <= cmd;
+		end else
+		begin
+			prim_cmd <= prim_cmd;
+		end
+	end
 
 	// finite state machine for control
 	reg [2:0] state;
@@ -66,10 +124,10 @@ module tap (
 	begin
 		case(state)
 			S_TST_INIT : next_state = S_TST_KEY;
-			S_TST_KEY  : next_state = (cmd_filled && (cmd[7:0] == KEY       )) ? S_TST_CMD  : S_TST_KEY;
-			S_TST_CMD  : next_state = (cmd_filled && (cmd[2:0] == MODE_IDDQ )) ? S_TST_SCAN : 
-			                          (cmd_filled && (cmd[2:0] == MODE_STUCK)) ? S_TST_SCAN :
-			                          (cmd_filled && (cmd[2:0] == MODE_DELAY)) ? S_TST_SCAN : S_TST_CMD;
+			S_TST_KEY  : next_state = (sr_filled && (sr[7:0] == KEY       )) ? S_TST_CMD  : S_TST_KEY;
+			S_TST_CMD  : next_state = (sr_filled && (sr[2:0] == MODE_IDDQ )) ? S_TST_SCAN : 
+			                          (sr_filled && (sr[2:0] == MODE_STUCK)) ? S_TST_SCAN :
+			                          (sr_filled && (sr[2:0] == MODE_DELAY)) ? S_TST_SCAN : S_TST_CMD;
 			S_TST_SCAN : next_state = (scan_filled) ? S_TST_EXE  : S_TST_SCAN;
 			S_TST_EXE  : next_state = (texe_done  ) ? S_TST_SCAN : S_TST_EXE;
 			S_APP      : next_state = S_APP;
@@ -89,8 +147,8 @@ module tap (
 			counter <= 5'd0;
 	end
 
-	assign cmd_filled  = &counter[2:0];
-	assign scan_filled = (counter >= cmd[7:3]) & (cmd[2:0] != MODE_IDDQ );
+	assign sr_filled  = &counter[2:0];
+	assign scan_filled = (counter >= sr[7:3]) & (sr[2:0] != MODE_IDDQ );
 
 	// glitch free control signals
 	always @(negedge tck, negedge trstb)

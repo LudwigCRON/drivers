@@ -32,6 +32,8 @@ module testcase;
     );
 
     tap tap (
+        .prim_gclk    (osc0       ),
+        .prim_rstb    (osc0_rstb  ),
         // tap interface
         .trstb        (trstb      ),
         .tck          (tck        ),
