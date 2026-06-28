@@ -1,0 +1,4 @@
++incdir+../rtl/ 
+../rtl/wut.v
+./environments/testbench.sv
+./testcase_basic.sv
