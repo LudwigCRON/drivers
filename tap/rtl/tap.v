@@ -16,6 +16,7 @@ module tap (
 	// scan chain interface
 	input  wire       tscan_end,
 	output wire       tscan_start,
+	output wire       tatpg,
 	// modes
 	output reg        tmode_delay,
 	output reg        tscan_enable,
@@ -195,6 +196,7 @@ module tap (
 	end
 
 	assign tapp_active = (next_state == S_APP) | window_elapsed;
+	assign tatpg = state[2] & ~state[0]; // SCAN or EXE
 
 	// mux
 	assign tde = tscan_enable;

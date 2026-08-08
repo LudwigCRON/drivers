@@ -42,9 +42,11 @@ module top (
     wire        tscan_exe;
     wire        tscan_enable;
     wire        tapp_active;
+    wire        tmode_delay;
     wire        tprim_burst_done;
     wire        tuart_burst_done;
     wire        texe_done;
+    wire        tatpg;
 
     wire [ 2:0] meas_state;
     wire [ 3:0] meas_phase;
@@ -52,6 +54,12 @@ module top (
     wire        meas_data_p;
     wire        meas_eoc_p;
     wire        meas_eop;
+
+    wire [ 8:0] wut_limit;
+    wire        wut_disable;
+    wire        wut_start_req;
+    wire        wut_start_ack;
+    wire        wut_trig_it;
 
     assign prim_div = 'd0;
     assign prim_dis = 1'b0;
@@ -98,9 +106,11 @@ module top (
         // scan chain interface
         .tscan_end    (tscan_end   ),
         .tscan_start  (tscan_start ),
+        .tatpg        (tatpg       ),
         // opcg
         .texe_done    (texe_done   ),
         // modes
+        .tmode_delay  (tmode_delay ),
         .tscan_enable (tscan_enable),
         .tscan_exe    (tscan_exe   ),
         .tapp_active  (tapp_active )
@@ -111,6 +121,7 @@ module top (
         .trstb          (ms_trstb        ),
         .tapp_active    (tapp_active     ),
         .tscan_exe      (tscan_exe       ),
+        .tmode_delay    (tmode_delay     ),
         .texe_done      (tprim_burst_done),
         .gclk           (prim_gclk       ),
         .gclk_rstb      (prim_rstb       ),
@@ -123,6 +134,7 @@ module top (
         .trstb          (ms_trstb        ),
         .tapp_active    (tapp_active     ),
         .tscan_exe      (tscan_exe       ),
+        .tmode_delay    (tmode_delay     ),
         .texe_done      (tuart_burst_done),
         .gclk           (uart_gclk       ),
         .gclk_rstb      (uart_rstb       ),
@@ -136,7 +148,7 @@ module top (
     ana_ctrl ana_ctrl (
         .prim_clk            (prim_clk    ),
         .prim_rstb           (prim_rstb   ),
-        .atpg                (1'b0        ),
+        .atpg                (tatpg       ),
         // control
         .trig                (1'b1        ),
         // adc interface
@@ -149,6 +161,7 @@ module top (
         .ms_afe_phase_update (ms_afe_phase_update),
         // digital processing
         .meas_state          (meas_state  ),
+        .meas_phase          (meas_phase  ),
         .meas_eoc_p          (meas_eoc_p  ),
         .meas_eop            (meas_eop    )
     );
@@ -171,6 +184,16 @@ module top (
         .meas_eop          (meas_eop),
         .meas_data         (meas_data),
         .meas_data_p       (meas_data_p)
+    );
+
+    wut wut (
+        .prim_clk          (prim_clk),
+        .prim_rstb         (prim_rstb),
+        .wut_limit         (wut_limit),
+        .wut_disable       (wut_disable),
+        .wut_start_req     (wut_start_req),
+        .wut_start_ack     (wut_start_ack),
+        .wut_trig_it       (wut_trig_it)
     );
 
 endmodule

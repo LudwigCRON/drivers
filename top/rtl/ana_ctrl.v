@@ -48,7 +48,7 @@ module ana_ctrl (
                 S_ENV_V: meas_state <= (meas_eop) ? S_INIT  : S_ENV_V;
                 default: meas_state <= S_INIT;
             endcase
-        end 
+        end
     end
 
     always @(posedge prim_clk, negedge prim_rstb)
@@ -123,7 +123,7 @@ module ana_ctrl (
 
     assign ms_afe_sel = afe_sel & {4{~atpg}};
     assign ms_adc_soc = (counter[3:0] == 'd9) & ~atpg;
-    assign ms_adc_clk = prim_clk;
+    assign ms_adc_clk = prim_clk & ~atpg;
 
 endmodule
 
