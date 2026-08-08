@@ -4,6 +4,7 @@ module opcg (
     input  wire trstb,
     input  wire tapp_active,
     input  wire tscan_exe,
+    input  wire tmode_delay,
     output wire texe_done,
     input  wire gclk,
     input  wire gclk_rstb,
@@ -23,7 +24,16 @@ module opcg (
     reg [2:0] scan_exe_resync;
     reg [1:0] exe_done_resync;
     reg [1:0] in_app_resync;
+    reg [1:0] delay_resync;
     reg [2:0] state;
+
+    always @(posedge gclk, negedge gclk_rstb)
+    begin
+        if (!gclk_rstb)
+            delay_resync <= 2'b00;
+        else
+            delay_resync <= {delay_resync[0], tmode_delay};
+    end
 
     always @(posedge gclk, negedge gclk_rstb)
     begin
@@ -50,10 +60,10 @@ module opcg (
         else
             case(state)
                 S_INIT : state <= (in_app_resync[1]   ) ? S_APPL : S_SCAN;
-                S_SCAN : state <= (scan_exe_resync[2] ) ? S_GAP0 : 
+                S_SCAN : state <= (scan_exe_resync[2] ) ? S_GAP0 :
                                   (in_app_resync[1]   ) ? S_INIT : S_SCAN;
                 S_GAP0 : state <= S_OSC0;
-                S_OSC0 : state <= S_OSC1;
+                S_OSC0 : state <= (delay_resync[1]) ? S_OSC1 : S_GAP1;
                 S_OSC1 : state <= S_GAP1;
                 S_GAP1 : state <= S_GAP2;
                 S_GAP2 : state <= (!scan_exe_resync[2]) ? S_SCAN : S_GAP2;

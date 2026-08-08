@@ -17,13 +17,14 @@ module tap (
 	input  wire       tscan_end,
 	output wire       tscan_start,
 	// modes
+	output reg        tmode_delay,
 	output reg        tscan_enable,
 	output reg        tscan_exe,
 	output wire       tapp_active
 );
 
 	parameter integer ENTRY_WINDOW = 'd30;
-	
+
 	localparam [2:0] S_TST_INIT = 3'b001;
 	localparam [2:0] S_TST_KEY  = 3'b011;
 	localparam [2:0] S_TST_CMD  = 3'b111;
@@ -35,11 +36,21 @@ module tap (
 	localparam [2:0] MODE_IDDQ  = 3'b010;
 	localparam [2:0] MODE_STUCK = 3'b101;
 	localparam [2:0] MODE_DELAY = 3'b110;
-	
+
 	// dummy tap
 	reg  [7:0] cmd;
 	reg  [7:0] sr;
 	wire       sr_filled;
+
+	// fsm
+	reg  [2:0] state;
+	reg  [2:0] next_state;
+	reg  [4:0] counter;
+	wire       scan_filled;
+
+	// entry window
+	reg  [4:0] window_counter;
+	reg        window_elapsed;
 
 	always @(negedge tck, negedge trstb)
 	begin
@@ -59,6 +70,16 @@ module tap (
 			cmd <= sr;
 		else
 			cmd <= cmd;
+	end
+
+	always @(negedge tck, negedge trstb)
+	begin
+		if (!trstb)
+			tmode_delay <= 1'b0;
+		else if (sr_filled && (state == S_TST_CMD))
+			tmode_delay <= (sr[2:0] == MODE_DELAY);
+		else
+			tmode_delay <= tmode_delay;
 	end
 
 	// recirculation mux cmd for external command
@@ -107,11 +128,6 @@ module tap (
 	end
 
 	// finite state machine for control
-	reg [2:0] state;
-	reg [2:0] next_state;
-	reg [4:0] counter;
-	wire      scan_filled;
-	
 	always @(negedge tck, negedge trstb)
 	begin
 		if (!trstb)
@@ -125,7 +141,7 @@ module tap (
 		case(state)
 			S_TST_INIT : next_state = S_TST_KEY;
 			S_TST_KEY  : next_state = (sr_filled && (sr[7:0] == KEY       )) ? S_TST_CMD  : S_TST_KEY;
-			S_TST_CMD  : next_state = (sr_filled && (sr[2:0] == MODE_IDDQ )) ? S_TST_SCAN : 
+			S_TST_CMD  : next_state = (sr_filled && (sr[2:0] == MODE_IDDQ )) ? S_TST_SCAN :
 			                          (sr_filled && (sr[2:0] == MODE_STUCK)) ? S_TST_SCAN :
 			                          (sr_filled && (sr[2:0] == MODE_DELAY)) ? S_TST_SCAN : S_TST_CMD;
 			S_TST_SCAN : next_state = (scan_filled) ? S_TST_EXE  : S_TST_SCAN;
@@ -165,9 +181,6 @@ module tap (
 	end
 
 	// window for app active
-	reg [4:0] window_counter;
-	reg       window_elapsed;
-
 	always @(posedge prim_gclk, negedge prim_rstb)
 	begin
 		if (!prim_rstb)
@@ -187,5 +200,5 @@ module tap (
 	assign tde = tscan_enable;
 	assign tdo = tscan_enable & tscan_end;
 	assign tscan_start = tscan_enable & tdi;
-	
+
 endmodule
