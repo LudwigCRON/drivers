@@ -10,4 +10,4 @@
 ./environments/chip.sv
 ../../tap/testcases/tap_master.sv
 ./environments/testbench.sv
-./testcase_sens.sv
+./testcase_delay.sv

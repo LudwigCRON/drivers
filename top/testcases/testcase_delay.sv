@@ -26,18 +26,19 @@ module testcase;
         `TB.PowerRamp(3.3, 100us);
         #(100us);
 
-        `CHIP.HPA.B = 5E-3;
-        `CHIP.HPB.B = 5E-3;
-        repeat(10)
+        $display("INFO: Enter Delay mode");
+        `TAP_MASTER.EnterAtpg(LENGTH, `TAP_MASTER.MODE_DELAY);
+        // add 2 for resync of pulse generation
+        repeat (LENGTH + 2)
+            `TAP_MASTER.SendBit($urandom() % 2);
+
+        repeat(8)
         begin
-            `CHIP.Tj = 233.15;
-            repeat(16)
-            begin
-                #(64us);
-                `CHIP.Tj += 13.5;
-            end
-            `CHIP.HPA.B += 5E-3;
-            `CHIP.HPB.B += 5E-3;
+            // measure
+            #(10us);
+            // scan out result while scanin
+            repeat (LENGTH + 4)
+                `TAP_MASTER.SendBit(1'b0);
         end
 
         #(100us);

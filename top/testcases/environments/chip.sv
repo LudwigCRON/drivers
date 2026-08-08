@@ -11,7 +11,20 @@ module chip (
     output wire       UTX
 );
 
+    // junction temperature in kelvin
     real Tj = 300.0;
+
+    // digital signals
+    wire       ms_hporb;
+    reg        ms_osc;
+    wire [3:0] ms_afe_sel;
+    wire [3:0] ms_afe_phase;
+    wire       ms_afe_phase_update;
+    wire       ms_adc_clk;
+    wire       ms_adc_soc;
+    reg        ms_adc_eoc;
+    reg [10:0] adc_state;
+    reg [11:0] ms_adc_data;
 
     // supply system modelling
     real VDDD;
@@ -29,9 +42,8 @@ module chip (
     assign PORB = (VDD - VSS > 2.8) ? 1'b1 : 1'b0;
     assign hporb = (VDDD - VSS > 1.2) ? 1'b1 :  1'b0;
 
-    
+
     // oscillator modelling
-    reg ms_osc;
     always forever
     begin
         ms_osc = 1'b0;
@@ -42,9 +54,6 @@ module chip (
 
     // signal path
     // hall plates
-    wire [3:0] ms_afe_phase;
-    wire       ms_afe_phase_update;
-
     real VHALLAP, VHALLAN;
     real VHALLBP, VHALLBN;
 
@@ -89,7 +98,10 @@ module chip (
     assign VTEMPP = 1.7E-3 * (Tj - 300) + 0.6;
 
     // mux sel
-    wire [3:0] ms_afe_sel;
+    real VINP;
+    real VINN;
+    real VREF;
+
 
     always @(*)
     begin
@@ -104,16 +116,7 @@ module chip (
     end
 
     // adc
-    real VINP;
-    real VINN;
-    real VREF;
-
     assign VREF = VDD;
-
-    wire       ms_adc_soc;
-    reg        ms_adc_eoc;
-    reg [10:0] adc_state;
-    reg [11:0] ms_adc_data;
 
     always @(negedge ms_adc_clk, negedge ms_hporb)
     begin
@@ -137,7 +140,7 @@ module chip (
         else
             adc_state <= adc_state >> 1;
     end
-    
+
     // levelshifters
     and g_lvlshft_hporb (ms_hporb, hporb, PORB);
     and g_lvlshft_trstb (ms_trstb, TRSTB, PORB);
