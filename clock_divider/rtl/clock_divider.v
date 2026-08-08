@@ -23,6 +23,8 @@ module clock_divider #(
     input  wire                   rstb,
     input  wire [RANGE_WIDTH-1:0] div,
     input  wire                   dis, // low power consideration with default enabled (reset)
+    output wire                   ce_posedge,
+    output wire                   ce_negedge,
     output wire                   gclk,
     output wire                   grstb
 );
@@ -31,7 +33,7 @@ module clock_divider #(
     reg                    bypass_latched;
     wire                   clk_b; // bypassed clock
     reg                    clk_r;
-    reg                    clk_f;  
+    reg                    clk_f;
     reg  [RANGE_WIDTH-2:0] counter;
 
     // control logic
@@ -101,6 +103,13 @@ module clock_divider #(
     end
 
     assign grstb = sync_rstb[3];
+
+    wire low_edge, high_edge;
+    nor g_low_edge  (low_edge,  stop_div,  clk_r);
+    nor g_high_edge (high_edge, stop_div, ~clk_r);
+
+    assign ce_posedge = (low_edge & toggle) | (bypass & div[0]);
+    assign ce_negedge = (high_edge & toggle) | (bypass & div[0]);
 
 endmodule
 
